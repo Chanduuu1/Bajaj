@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Interaction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>API Interaction</h1>
+
+      <!-- Form to send data to /api/data -->
+      <h2>Submit Data</h2>
+      <form id="dataForm">
+        <textarea
+          id="dataInput"
+          rows="5"
+          cols="60"
+          placeholder='Enter JSON data (e.g., {"data": ["M", "1", "334", "4", "B", "Z", "a"]})'
+          required
+        ></textarea
+        ><br />
+        <button type="submit">Submit Data</button>
+      </form>
+      <div id="dataResult" class="result"></div>
+
+      <!-- Button to fetch code from /api/code -->
+      <h2>Get Operation Code</h2>
+      <button id="fetchCodeButton">Fetch Code</button>
+      <div id="codeResult" class="result"></div>
+    </div>
+
+    <script>
+      // Function to handle form submission
+      document
+        .getElementById("dataForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+
+          const dataInput = document.getElementById("dataInput").value;
+          const response = await fetch("/bfhl", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: dataInput,
+          });
+
+          const result = await response.json();
+          document.getElementById("dataResult").innerText = JSON.stringify(
+            result,
+            null,
+            2
+          );
+        });
+
+      // Function to fetch operation code
+      document
+        .getElementById("fetchCodeButton")
+        .addEventListener("click", async function () {
+          const response = await fetch("/api/code");
+          const result = await response.json();
+          document.getElementById("codeResult").innerText = JSON.stringify(
+            result,
+            null,
+            2
+          );
+        });
+    </script>
+  </body>
+</html>
