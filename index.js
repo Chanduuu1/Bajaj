@@ -3,6 +3,7 @@ const app = express();
 
 // Middleware to parse JSON data
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "views")));
 
 // POST endpoint to accept JSON and return the required details
 app.post("/bfhl", (req, res) => {
@@ -35,7 +36,7 @@ app.post("/bfhl", (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  res.redirect("/bfhl");
+  res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 // GET endpoint to return an operation code
 app.get("/bfhl", (req, res) => {
