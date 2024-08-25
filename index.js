@@ -34,6 +34,9 @@ app.post("/bfhl", (req, res) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/bfhl");
+});
 // GET endpoint to return an operation code
 app.get("/bfhl", (req, res) => {
   console.log("Hello World");
